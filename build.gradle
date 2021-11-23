@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+}
+
+group 'com.sudo'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    camelVersion = '2.25.4'
+}
+dependencies {
+
+    implementation group: 'org.apache.camel', name: 'camel-core', version: camelVersion
+    implementation group: 'org.apache.camel', name: 'camel-jackson', version: camelVersion
+    implementation group: 'org.apache.camel', name: 'camel-jpa', version: camelVersion
+    implementation group: 'org.apache.camel', name: 'camel-jdbc', version: camelVersion
+    implementation group: 'org.apache.camel', name: 'camel-spark-rest', version: camelVersion
+    implementation group: 'javax.inject', name: 'javax.inject', version: '1'
+
+//    implementation group: 'org.apache.camel', name: 'camel-jpa-starter', version: camelVersion
+
+
+//    implementation group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.1.Final'
+
+
+    implementation group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.9.0'
+
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.1'
+
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.6.1.Final'
+    implementation group: 'org.hibernate', name: 'hibernate-validator', version: '6.1.0.Final'
+
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
