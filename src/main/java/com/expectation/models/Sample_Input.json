@@ -1,0 +1,51 @@
+{
+  "dpName": "bidberry",
+  "dpRegion": "eu",
+  "dpProduct": "profile",
+  "properties": [
+    {
+      "tableName": "rawInput",
+      "tableDfName": "inputDf",
+      "tableColumns": [
+        {
+          "colName": "values",
+          "colValues": [1, 2, 3, 4, 5, 6, 7],
+          "colDataType": "String",
+          "additionalColProperties": [
+            "withNull",
+            "withJunk"
+          ]
+        },
+        {
+          "colName": "country",
+          "colValues": ["gbr", "esp", "deu", "fra", "ita"],
+          "colDataType": "String",
+          "additionalColProperties": [
+          ]
+        }
+      ]
+    },
+    {
+      "tableName": "maidInput",
+      "tableDfName": "maid",
+      "tableColumns": [
+        {
+          "colName": "_c0",
+          "colValues": ["iPhone", "Unknown", "X88 Pro", "SmartTV", "To Be Filled By O.E.M.", "HP Notebook", "iPad"],
+          "colDataType": "String",
+          "additionalColProperties": [
+            "withNull"
+          ]
+        },
+        {
+          "colName": "_c1",
+          "colValues": ["DEU", "GBR", "ITA", "FRA", "ESP"],
+          "colDataType": "String",
+          "additionalColProperties": [
+            "withJunk"
+          ]
+        }
+      ]
+    }
+  ]
+}
