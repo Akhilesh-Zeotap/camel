@@ -27,7 +27,14 @@ public class GenerateExpectation {
         return new StringBuilder(String.format(Constants.IMPORTS, StringUtils.capitalize(dpName))).append(getCombinedTables(mapValues).append(getListOfDf(dpName, dpRegion, dpProduct, tableDfMap)));
     }
 
-
+    /*
+    tableDfMap is Map of tableName with its corresponding Dataframe Name.
+    Sample Generated Output :
+    override def getRawDataDefinition(region: String, product: String): Map[String, SparkDataframe] = (region, product) match {
+    case ("eu", "profile") => getSparkDataFrameMap[DColumn, SparkDataframe](List(("inputDf",onaudience_rawInput_eu_profile),("maid",onaudience_maidInput_eu_profile)))
+    case _ => Map("emptyDataset" -> SparkDataframe())
+  }
+     */
     private static String getListOfDf(String dpName, String dpRegion, String dpProduct, Map<String, String> tableDfMap) {
         StringBuilder rawDefInput = new StringBuilder();
         for (String tableName : tableDfMap.keySet()) {
@@ -38,26 +45,41 @@ public class GenerateExpectation {
         return String.format(Constants.POST_EXPECTATION, dpRegion, dpProduct, rawDefInput);
     }
 
+    /*
+    ->mapValues is map<tableName,Array of DColumn String of that table.
+    Eg:=> Map<rawInput,val bidberry_rawInput_eu_profile: Array[DColumn] = Array(
+    column("values", List(1,2,3,4)).WithNull,
+    column("country", List("gbr", "esp", "deu", "fra", "ita")).WithJunk)>
+
+    ->Generates combined Array DColumn for all the input tables.
+     */
     private static StringBuilder getCombinedTables(Map<String, StringBuilder> mapValues) {
         StringBuilder combinedValues = new StringBuilder();
         for (StringBuilder value : mapValues.values()) {
-            combinedValues.append(value).append(")\n\n");
+            combinedValues.append(value).append("\n\n");
         }
         return combinedValues;
     }
 
-
+    /*
+    Generates variable name for DColumn Array. Eg => val bidberry_rawInput_eu_profile: Array[DColumn] = Array(
+     */
     private static String getTableVariableName(String dpName, String tableName, String dpRegion, String dpProduct) {
         String varName = dpName.toLowerCase() + "_" + tableName + "_" + dpRegion + "_" + dpProduct;
         return String.format(Constants.TABLE, varName);
     }
 
+    /*
+    Generates column in the format :=> column("country", List("DEU", "GBR", "ITA", "FRA", "ESP")).WithNull.WithJunk
+    Note: columnValues is String with values in the format: "a","b" (Mandatory) else the values will be considered as
+    single values, Eg "a,b,c" will be considered as single value i.e. List("a,b,c") rather than 3 values i.e List("a","b","c")
+     */
     private static StringBuilder generateColumn(String columnName, String columnValues, List<String> columnProperties) {
         StringBuilder column = new StringBuilder(String.format(Constants.COLUMN, columnName) + columnValues + "))");
         for (String columnProperty : columnProperties) {
             column.append(".").append(columnProperty);
         }
-        return column;
+        return column.append(")");
     }
 
 }

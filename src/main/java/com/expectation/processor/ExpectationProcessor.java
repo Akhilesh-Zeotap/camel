@@ -1,9 +1,6 @@
 package com.expectation.processor;
 
-import com.expectation.constants.Constants;
 import com.expectation.models.DataInput;
-import com.expectation.models.Property;
-import com.expectation.models.TableList;
 import org.apache.camel.Exchange;
 import org.apache.commons.lang.StringUtils;
 
@@ -14,13 +11,13 @@ public class ExpectationProcessor {
 
         StringBuilder outputFile = GenerateExpectation.generateExpectation(
                 dataInput.getProperties(),
-                dataInput.getDpName(),
-                dataInput.getDpRegion(),
-                dataInput.getDpProduct());
+                dataInput.getDpName().toLowerCase(),
+                dataInput.getDpRegion().toLowerCase(),
+                dataInput.getDpProduct().toLowerCase());
 
         WriteFile.writeToFile(outputFile,
-                dataInput.getDpRegion(),
-                dataInput.getDpProduct(),
+                dataInput.getDpRegion().toLowerCase(),
+                dataInput.getDpProduct().toLowerCase(),
                 StringUtils.capitalize(dataInput.getDpName()));
     }
 }

@@ -1,7 +1,6 @@
 package com.expectation.api;
 
 import com.expectation.models.DataInput;
-import com.expectation.models.TableList;
 import com.expectation.processor.ExpectationProcessor;
 import org.apache.camel.builder.RouteBuilder;
 
