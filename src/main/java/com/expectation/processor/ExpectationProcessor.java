@@ -1,6 +1,8 @@
 package com.expectation.processor;
 
 import com.expectation.constants.Constants;
+import com.expectation.models.DataInput;
+import com.expectation.models.Property;
 import com.expectation.models.TableList;
 import org.apache.camel.Exchange;
 import org.apache.commons.lang.StringUtils;
@@ -8,20 +10,17 @@ import org.apache.commons.lang.StringUtils;
 public class ExpectationProcessor {
     public void create(Exchange exchange) {
 
-        TableList tableList = exchange.getIn().getBody(TableList.class);
-        String dpName = StringUtils.capitalize(tableList.getDpName());
-        StringBuilder outputFile = new StringBuilder(String.format(Constants.IMPORTS, dpName));
+        DataInput dataInput = exchange.getIn().getBody(DataInput.class);
 
-        String ans = InputGenerator.columnListGenerator(
-                tableList.getProperties(),
-                tableList.getDpName(),
-                tableList.getDpRegion(),
-                tableList.getDpProduct());
+        StringBuilder outputFile = GenerateExpectation.generateExpectation(
+                dataInput.getProperties(),
+                dataInput.getDpName(),
+                dataInput.getDpRegion(),
+                dataInput.getDpProduct());
 
-        outputFile.append(ans);
         WriteFile.writeToFile(outputFile,
-                tableList.getDpRegion(),
-                tableList.getDpProduct(),
-                dpName);
+                dataInput.getDpRegion(),
+                dataInput.getDpProduct(),
+                StringUtils.capitalize(dataInput.getDpName()));
     }
 }

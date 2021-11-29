@@ -2,12 +2,11 @@ package com.expectation.models;
 
 import java.util.List;
 
-public class TableList {
-
+public class DataInput {
     private String dpName;
     private String dpRegion;
     private String dpProduct;
-    private List<Table> properties;
+    private List<Property> properties;
 
     public String getDpName() {
         return dpName;
@@ -33,11 +32,11 @@ public class TableList {
         this.dpProduct = dpProduct;
     }
 
-    public List<Table> getProperties() {
+    public List<Property> getProperties() {
         return properties;
     }
 
-    public void setProperties(List<Table> properties) {
+    public void setProperties(List<Property> properties) {
         this.properties = properties;
     }
 }

@@ -1,5 +1,6 @@
 package com.expectation.api;
 
+import com.expectation.models.DataInput;
 import com.expectation.models.TableList;
 import com.expectation.processor.ExpectationProcessor;
 import org.apache.camel.builder.RouteBuilder;
@@ -14,7 +15,7 @@ public class ExpectationApi extends RouteBuilder {
 
         rest("expectation/create")
                 .post()
-                .type(TableList.class)
+                .type(DataInput.class)
                 .route()
                 .bean(ExpectationProcessor.class, "create");
     }
