@@ -1,0 +1,31 @@
+curl --location --request PUT 'http://cfgsvc-int-de-prod-eu.zeotap.net/data_discovery/eu/profile_weboramadp_preprocess' \
+--header 'Content-Type: text/plain' \
+--data-raw '{
+              "sources": {
+                "registered": [
+                 {
+                    "qualifiedName": "eu.profile.adastait.IabMappingSpain.preprocess",
+                    "tableName": "df"
+                  }                ],
+                "adhoc": []
+              },
+              "sqlQueries": [
+                {
+                  "query": "select tubedf.zcookieid as zcookieid_preprocess,tubedf.country_code_iso3 as country_code_iso3_preprocess,tubedf._cookieArray,tubedf.timestamp as timestamp_preprocess,tubedf.timestamp as CREATED_TS_raw,tubeDf.category as category_preprocess,tubeDf.carbrand as carbrand_preprocess,mappingDf.brand as Brands_preprocess,mappingDf.iab as IAB_preprocess from tubedf left join mappingDf on tubedf.category = mappingDf.category and tubedf.carbrand=mappingDf.carbrand",
+                  "tablename": "preOutputDf"
+                },
+                {
+                  "query": "select * from preOutputDf where country_code_iso3_preprocess in('DEU','ESP','FRA','GBR','ITA') group by _cookieArray,zcookieid_preprocess,country_code_iso3_preprocess,timestamp_preprocess,IAB_preprocess,Brands_preprocess,CREATED_TS_raw,carbrand_preprocess,category_preprocess",
+                  "tablename": "outputDf"
+                }
+              ],
+              "sinks": {
+                "registered": [
+                  {
+                    "qualifiedOutputName": "eu.profile.carwow.output.preprocess",
+                    "inputTableName": "outputDf"
+                  }
+                ],
+                "adhoc": []
+              }
+            }'
