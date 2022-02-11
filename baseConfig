@@ -1,0 +1,27 @@
+curl --location --request PUT 'http://cfgsvc-int-de-prod-eu.zeotap.net/data_discovery/eu/profile_weboramadp_preprocess' \
+--header 'Content-Type: text/plain' \
+--data-raw '{
+              "sources": {
+                "registered": [
+                 {
+                    "qualifiedName": "eu.profile.adastait.IabMappingSpain.preprocess",
+                    "tableName": "df"
+                  }                ],
+                "adhoc": []
+              },
+              "sqlQueries": [
+                {
+                  "query": "select * from df",
+                  "tablename": "output"
+                }
+              ],
+              "sinks": {
+                "registered": [
+                  {
+                    "qualifiedOutputName": "eu.profile.bidberry.output.preprocess",
+                    "inputTableName": "output"
+                  }
+                ],
+                "adhoc": []
+              }
+            }'
